@@ -1,10 +1,13 @@
+import { config as dotenv} from "dotenv";
 import "reflect-metadata";
 import path from "path";
 import { Intents, Interaction, Message } from "discord.js";
 import { Client } from "discordx";
 
+dotenv();
+
 const client = new Client({
-  prefix: "!",
+  prefix: process.env.BOT_PREFIX,
   intents: [
     Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_MESSAGES,
@@ -22,7 +25,7 @@ const client = new Client({
 client.once("ready", async () => {
   await client.initApplicationCommands({
     guild: { log: true },
-    global: { log: true },
+    // global: { log: true },
   });
   await client.initApplicationPermissions();
 
@@ -37,4 +40,4 @@ client.on("messageCreate", (message: Message) => {
   client.executeCommand(message);
 });
 
-client.login(process.env.BOT_TOKEN ?? ""); // provide your bot token
+client.login(process.env.BOT_TOKEN ?? "");
